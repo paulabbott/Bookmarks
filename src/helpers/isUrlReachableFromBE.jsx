@@ -1,4 +1,3 @@
-//NOTE: white listed https://eafdceab-1243-4b06-9497-7930dc82c606.id.repl.co for bookmarks.paul161.repl.co
 export async function isUrlReachableFromBE(inputUrl) {
   let urlParts = new URL(inputUrl)
   let url = 'https://cors-anywhere.paul161.repl.co/' + urlParts.host + urlParts.pathname

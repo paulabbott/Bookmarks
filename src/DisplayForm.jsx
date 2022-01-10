@@ -31,6 +31,8 @@ export function DisplayForm(buttons, bookmark = {}) {
     }
   })
 
+  const submitButton = buttons.find((button) => button.type === 'submit')
+
   //generic handleChange funciton for all inputs
   const handleChange = (event) => {
     updateValues({ [event.target.id]: event.target.value })
@@ -51,8 +53,6 @@ export function DisplayForm(buttons, bookmark = {}) {
 
   const validationRules = [ValidateUrlFormatPromise, checkUrlExists]
 
-  const submitButton = returnSubmitButton(buttons)
-
   const setTimedValidationMessage = (flashMessage = "") => {
     // setValidationMessage(flashMessage)
     updateValues({ validationMessage: flashMessage })
@@ -60,11 +60,7 @@ export function DisplayForm(buttons, bookmark = {}) {
     setTimeout(() => { updateValues({ validationMessage: '' }) }, delay * 3)
   }
 
-  function returnSubmitButton(buttons) {
-    return buttons.find((button) => button.type === 'submit')
-  }
-
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     updateValues({ isWaiting: true })
     const validationResult = await validateField(values.url, validationRules)
@@ -88,7 +84,7 @@ export function DisplayForm(buttons, bookmark = {}) {
   }
 
   // allow buttons to change the local form values, show/hide and reset input fields.
-  function callAfterFunc(funcName) {
+  const callAfterFunc = (funcName) => {
     switch (funcName) {
       case 'close':
         updateValues({ showForm: false })
@@ -102,14 +98,14 @@ export function DisplayForm(buttons, bookmark = {}) {
   }
 
   // pass the current bookmark to the passed in function onClick function
-  function handleButtonClick(e, func, afterFunc, bookmark) {
+  const handleButtonClick = (e, func, afterFunc, bookmark) => {
     e.preventDefault();
     func && func(bookmark)
     afterFunc && callAfterFunc(afterFunc)
   }
 
   //display the form in onlyread mode
-  function readView() {
+  const readView = () => {
     return (
       <div>
         <a rel="noreferrer" target="_blank" href={bookmark.url}>{bookmark.url}</a>
@@ -120,7 +116,7 @@ export function DisplayForm(buttons, bookmark = {}) {
 
   //return an jsx fragment containing the buttons for the form
   //TODO: could probably dry this up a bit
-  function DisplayFormButtons() {
+  const DisplayFormButtons = () => {
     return (
       <React.Fragment>
         {
@@ -146,7 +142,7 @@ export function DisplayForm(buttons, bookmark = {}) {
   }
 
   //display the form inputs and the custom buttons.
-  function formView() {
+  const formView = () => {
     return (
       <BookmarkEditBox>
         <form onSubmit={e => { handleSubmit(e) }}>

@@ -4,7 +4,7 @@ import StyledButton from './components/StyledButton'
 
 //TODO: extract the pagination
 
-function BookmarkList({ bookmarks, editFunc, deleteFunc }) {
+const BookmarkList = ({ bookmarks, editFunc, deleteFunc }) => {
   const pageSize = 3
   const [currentPage, setCurrentPage] = useState(0)
 
