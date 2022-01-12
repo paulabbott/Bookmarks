@@ -1,9 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
-import BookmarkList from './BookmarkList';
-import AddBookmark from './AddBookmark'
-import StyledButton from './components/StyledButton'
-import StyledSection from './components/StyledSection'
+import BookmarkList from '../Bookmarks/BookmarkList';
+import AddBookmark from '../Bookmarks/AddBookmark'
+import StyledButton from '../UI/StyledButton'
+import StyledSection from '../UI/StyledSection'
 
 function App() {
 

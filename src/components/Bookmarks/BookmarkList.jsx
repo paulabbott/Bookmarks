@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import StyledBookmark from './Bookmark'
-import StyledButton from './components/StyledButton'
+import StyledButton from '../UI/StyledButton'
 
 //TODO: extract the pagination
 
@@ -26,9 +26,9 @@ const BookmarkList = ({ bookmarks, editFunc, deleteFunc }) => {
         {[...Array(numOfPages)].map((e, i) => {
           //TODO: tidy this up and apply a current style
           if (i == currentPage) {
-            return <span key={'page' + i+1}>&nbsp;<u>{i+1}</u>&nbsp;</span>
+            return <span key={'page' + i + 1}>&nbsp;<u>{i + 1}</u>&nbsp;</span>
           } else {
-            return <span key={'page' + i+1}>&nbsp;{i+1}&nbsp;</span>
+            return <span key={'page' + i + 1}>&nbsp;{i + 1}&nbsp;</span>
           }
         })
         }

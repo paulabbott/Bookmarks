@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
-import { DisplayForm } from './displayForm'
+import { DisplayForm } from './DisplayForm'
 
 //NOTE: className allows it to be wrapped in a styled component
 const Bookmark = ({ className, bookmark = {}, editFunc, deleteFunc }) => {

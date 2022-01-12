@@ -1,5 +1,5 @@
 import React from "react";
-import { DisplayForm } from './displayForm'
+import { DisplayForm } from './DisplayForm'
 
 function AddBookmark({ addFunc }) {
 

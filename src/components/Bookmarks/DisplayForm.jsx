@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import StyledButton from './components/StyledButton'
-import { ValidateUrlFormatPromise, checkUrlExists } from './helpers/validationRules'
-import isEmptyObj from './helpers/isEmptyObj'
-import readTime from './helpers/readTime'
-import validateField from './helpers/validateField'
-import BookmarkEditBox from './components/BookmarkEditBox'
+import StyledButton from '../UI/StyledButton'
+import { ValidateUrlFormatPromise, checkUrlExists } from '../../services/validationRules'
+import isEmptyObj from '../../services/isEmptyObj'
+import readTime from '../../services/readTime'
+import validateField from '../../services/validateField'
+import BookmarkEditBox from './BookmarkEditBox'
 
 export function DisplayForm(buttons, bookmark = {}) {
 
