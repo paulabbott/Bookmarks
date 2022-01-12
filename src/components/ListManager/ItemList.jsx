@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import StyledBookmark from './Bookmark'
+import StyledBookmark from './Item'
 import StyledButton from '../UI/StyledButton'
 
 //TODO: extract the pagination
