@@ -6,15 +6,30 @@ import readTime from '../../services/readTime'
 import validateField from '../../services/validateField'
 import BookmarkEditBox from './BookmarkEditBox'
 import { formButtonDetails } from './AddItemForm';
-
+//TODO: import from a more generic file
+import {Bookmark} from './ListManager'
 
 
 export function DisplayForm(buttons: formButtonDetails[], bookmark = {}) {
 
+  /*
+  TODO: look at using something like this to type a meta setState
+  TODO: understand if useReducer would clean all this up.
+  ref: https://lucasbassetti.com/blog/using-usestate-hook-with-typescript/
+  */
+  interface values {
+        showForm: boolean,
+        url: string,
+        urlDesc: string,
+        isWaiting: boolean
+        validationMessage: string
+        }
+
   //init form depending on if we were passed a bookmark with data
   //Q: does this break rules of Hooks?
   //https://reactjs.org/docs/hooks-rules.html
-  const [values, setValues] = useState(() => {
+  //TODO:Q I don't really understand <values> here.
+  const [values, setValues] = useState<values>(() => {
     if (isEmptyObj(bookmark)) {
       return ({
         showForm: true,
@@ -46,18 +61,10 @@ export function DisplayForm(buttons: formButtonDetails[], bookmark = {}) {
   //TODO: more strongly type this? if it's generic move it to a service file?
   const updateValues = (obj: object) => {
     console.log('in updateValues with', obj)
-    let newValues = {}
+    //TODO: can we do better than 'as any'?
+    let newValues = {} as any
     for (const [key, value] of Object.entries(obj)) {
       newValues[key] = value
-
-// This gives an error
-const temp = someObj[field];
-
-// Solution 1: When the type of the object is known
-const temp = someObj[field as keyof ObjectType]
-
-// Solution 2: When the type of the object is not known
-const temp = someObj[field as keyof typeof someObj]      
 
     }
     //have to pass prevState, cos closures
@@ -100,7 +107,7 @@ const temp = someObj[field as keyof typeof someObj]
   }
 
   // allow buttons to change the local form values, show/hide and reset input fields.
-  const callAfterFunc = (funcName) => {
+  const callAfterFunc = (funcName: string) => {
     switch (funcName) {
       case 'close':
         updateValues({ showForm: false })
@@ -114,7 +121,7 @@ const temp = someObj[field as keyof typeof someObj]
   }
 
   // pass the current bookmark to the passed in function onClick function
-  const handleButtonClick = (e, func, afterFunc, bookmark) => {
+  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>, func: Function, afterFunc: string, bookmark: Bookmark) => {
     e.preventDefault();
     func && func(bookmark)
     afterFunc && callAfterFunc(afterFunc)
