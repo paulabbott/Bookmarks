@@ -1,5 +1,11 @@
 import styled from 'styled-components'
 
+//TODO: how do I type the props used in a styled component?
+
+type Props = {
+  wait: boolean
+}
+
 const StyledButton = styled.button`
   border-radius: 10px;
   border: 0;

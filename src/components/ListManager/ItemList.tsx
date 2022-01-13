@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import StyledBookmark from './Item'
 import StyledButton from '../UI/StyledButton'
+import { Bookmark } from './ListManager';
 
 //TODO: extract the pagination
 
-const BookmarkList = ({ bookmarks, editFunc, deleteFunc }) => {
+type Props = {
+  bookmarks: Bookmark[], 
+  editFunc: Function, 
+  deleteFunc: Function
+}
+
+const ItemList = ({ bookmarks, editFunc, deleteFunc }: Props ) => {
   const pageSize = 3
   const [currentPage, setCurrentPage] = useState(0)
 
@@ -54,4 +61,4 @@ const BookmarkList = ({ bookmarks, editFunc, deleteFunc }) => {
   );
 }
 
-export default BookmarkList;
+export default ItemList;

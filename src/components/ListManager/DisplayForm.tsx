@@ -5,8 +5,11 @@ import isEmptyObj from '../../services/isEmptyObj'
 import readTime from '../../services/readTime'
 import validateField from '../../services/validateField'
 import BookmarkEditBox from './BookmarkEditBox'
+import { formButtonDetails } from './AddItemForm';
 
-export function DisplayForm(buttons, bookmark = {}) {
+
+
+export function DisplayForm(buttons: formButtonDetails[], bookmark = {}) {
 
   //init form depending on if we were passed a bookmark with data
   //Q: does this break rules of Hooks?
@@ -23,6 +26,7 @@ export function DisplayForm(buttons, bookmark = {}) {
     } else {
       return ({
         showForm: false,
+        //TODO:Q fix Property 'url' does not exist on type '{}'. (just bad code?)
         url: bookmark.url,
         urlDesc: bookmark.urlDesc,
         isWaiting: false,
@@ -31,18 +35,30 @@ export function DisplayForm(buttons, bookmark = {}) {
     }
   })
 
+  //NOTE .find returns undefined if fails
   const submitButton = buttons.find((button) => button.type === 'submit')
 
   //generic handleChange funciton for all inputs
-  const handleChange = (event) => {
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     updateValues({ [event.target.id]: event.target.value })
   }
 
-  const updateValues = (obj) => {
+  //TODO: more strongly type this? if it's generic move it to a service file?
+  const updateValues = (obj: object) => {
     console.log('in updateValues with', obj)
     let newValues = {}
     for (const [key, value] of Object.entries(obj)) {
       newValues[key] = value
+
+// This gives an error
+const temp = someObj[field];
+
+// Solution 1: When the type of the object is known
+const temp = someObj[field as keyof ObjectType]
+
+// Solution 2: When the type of the object is not known
+const temp = someObj[field as keyof typeof someObj]      
+
     }
     //have to pass prevState, cos closures
     //ref: https://reactjs.org/docs/hooks-reference.html#usestate
@@ -74,9 +90,9 @@ export function DisplayForm(buttons, bookmark = {}) {
       bookmark['created'] = ('created' in bookmark) ? bookmark.created : + new Date()
       // calls the function associated with the submit button, atm either add or edit.
       //TODO: rename onClickFunc?
-      submitButton.func(bookmark)
+      submitButton && submitButton.func(bookmark)
       // calls a local form action such as reset or close the form.
-      callAfterFunc(submitButton.afterFunc)
+      submitButton && callAfterFunc(submitButton.afterFunc)
     } else {
       setTimedValidationMessage(validationResult.messages[0].errorMessage)
       console.log('validation failed', validationResult.messages[0].errorMessages)
