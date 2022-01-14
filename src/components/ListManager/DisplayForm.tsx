@@ -43,22 +43,14 @@ export function DisplayForm(buttons: formButtonDetails[], bookmark = {}) {
     updateValues({ [event.target.id]: event.target.value })
   }
 
-  //TODO: more strongly type this? if it's generic move it to a service file?
+  //TODO: make this generic and also pass in the setValues funciton?
+  //TODO: can this be swapped for useReducer?
   const updateValues = (obj: object) => {
     console.log('in updateValues with', obj)
-    let newValues = {}
+    //TODO: 'as any' feels dirty, but newValues[key] is a type error otherwise, more elegant solution?
+    let newValues = {} as any
     for (const [key, value] of Object.entries(obj)) {
       newValues[key] = value
-
-// This gives an error
-const temp = someObj[field];
-
-// Solution 1: When the type of the object is known
-const temp = someObj[field as keyof ObjectType]
-
-// Solution 2: When the type of the object is not known
-const temp = someObj[field as keyof typeof someObj]      
-
     }
     //have to pass prevState, cos closures
     //ref: https://reactjs.org/docs/hooks-reference.html#usestate
@@ -85,7 +77,7 @@ const temp = someObj[field as keyof typeof someObj]
       })
     updateValues({ isWaiting: false })
     if (validationResult.passedAll) {
-      bookmark['url'] = values.url
+      bookmark['url'] = values.url  
       bookmark['urlDesc'] = values.urlDesc
       bookmark['created'] = ('created' in bookmark) ? bookmark.created : + new Date()
       // calls the function associated with the submit button, atm either add or edit.
