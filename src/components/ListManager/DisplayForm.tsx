@@ -58,10 +58,11 @@ export function DisplayForm(buttons: formButtonDetails[], bookmark = {}) {
     updateValues({ [event.target.id]: event.target.value })
   }
 
-  //TODO: more strongly type this? if it's generic move it to a service file?
+  //TODO: make this generic and also pass in the setValues funciton?
+  //TODO: can this be swapped for useReducer?
   const updateValues = (obj: object) => {
     console.log('in updateValues with', obj)
-    //TODO: can we do better than 'as any'?
+    //TODO: can we do better than 'as any'? Generic?
     let newValues = {} as any
     for (const [key, value] of Object.entries(obj)) {
       newValues[key] = value
@@ -92,7 +93,7 @@ export function DisplayForm(buttons: formButtonDetails[], bookmark = {}) {
       })
     updateValues({ isWaiting: false })
     if (validationResult.passedAll) {
-      bookmark['url'] = values.url
+      bookmark['url'] = values.url  
       bookmark['urlDesc'] = values.urlDesc
       bookmark['created'] = ('created' in bookmark) ? bookmark.created : + new Date()
       // calls the function associated with the submit button, atm either add or edit.
