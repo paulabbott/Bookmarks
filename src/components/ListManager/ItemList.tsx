@@ -44,6 +44,7 @@ const ItemList = ({ bookmarks, editFunc, deleteFunc }: Props ) => {
   }
 
   //TODO: use unordered list tags?
+
   return (
     <div>
       <div>

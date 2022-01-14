@@ -1,33 +1,40 @@
 import React from "react";
 import { DisplayForm } from './DisplayForm'
+import StyledButton from '../UI/StyledButton'
+import validateField from "../../services/validateField";
 
-//Could do it this way
-/*
-type Props = {
-  addFunc: Function
-}
-*/
-
-//TODO: I need to change this to a known pattern.
-//TODO: use the button components as a half way step?
-export interface formButtonDetails {
-  type: string,
-  value: string,
-  func: Function,
-  afterFunc: string
-}
-
-//ref: https://mariusschulz.com/blog/typing-destructured-object-parameters-in-typescript
 function AddBookmark({ addFunc }: { addFunc: Function }) {
 
-  const buttons: formButtonDetails[] = [{
-    type: 'submit',
-    value: 'add',
-    func: addFunc,
-    afterFunc: 'reset'
-  }]
+  const DisplayFormButtons = (values, updateValues) => {
+    return (<StyledButton key='key-addButton' type='submit' wait={values.isWaiting} disabled={values.isWaiting}>
+      {values.isWaiting ? 'wait' : 'add2'}
+    </StyledButton>
+    )
+  }
 
-  return DisplayForm(buttons)
+  const onSubmit = (values, updateValues) => {
+    //create a new bookmark and add it
+    const newBookmark = {
+      url: values.url,
+      urlDesc: values.urlDesc,
+      created: + new Date()
+    }
+    addFunc(newBookmark)
+    updateValues({ url: '', urlDesc: '' })
+  }
+
+  const initState = {
+    showForm: true,
+    url: '',
+    urlDesc: '',
+    isWaiting: false,
+    validationMessage: ''
+  }
+
+  return DisplayForm(initState, onSubmit, {}, DisplayFormButtons)
+  //TODO: change DisplayForm into a proper compoent and pass props so we can wrap the children
+  // return <NewDisplayForm initState={initState} onSubmit={onSubmit} bookmark={ } styledButtons={DisplayFormButtons} />
+
 }
 
 export default AddBookmark;
