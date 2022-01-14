@@ -2,6 +2,7 @@ import React from "react";
 import { DisplayForm } from './DisplayForm'
 import StyledButton from '../UI/StyledButton'
 import validateField from "../../services/validateField";
+import { NewDisplayForm } from "./NewDisplayForm";
 
 function AddBookmark({ addFunc }: { addFunc: Function }) {
 
@@ -31,10 +32,7 @@ function AddBookmark({ addFunc }: { addFunc: Function }) {
     validationMessage: ''
   }
 
-  return DisplayForm(initState, onSubmit, {}, DisplayFormButtons)
-  //TODO: change DisplayForm into a proper compoent and pass props so we can wrap the children
-  // return <NewDisplayForm initState={initState} onSubmit={onSubmit} bookmark={ } styledButtons={DisplayFormButtons} />
-
+  return <NewDisplayForm initState={initState} onSubmit={onSubmit} styledButtons={DisplayFormButtons} />
 }
 
 export default AddBookmark;

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { DisplayForm } from './DisplayForm'
 import { Bookmark } from './ListManager';
 import StyledButton from '../UI/StyledButton'
+import { NewDisplayForm } from './NewDisplayForm'
 
 //TODO: change bookmark to be Bookmark | null
 type Props = {
@@ -66,16 +67,22 @@ const Item = ({ className, bookmark, editFunc, deleteFunc }: Props) => {
 
 
   //so last bit of the puzzel pass updateValues to the buttons object so it can reset form values?
+  //sould maybe split form init state ie open/closed and data init state, ie bookmark.
   /*
-<DisplayForm initState onSubmit>
-          <FormInputFields values updateValues>
+<NewDisplayForm initState={initState} onSubmit={onSubmit} >
+          <FormInputFields bookmark={bookmark} values updateValues>
           <DisplayFormButtons values updateValues/>
-</DisplayForm>
+</NewDisplayForm>
 
   */
+
+  const TestCompenent = () => {
+    return <p>testCompenent</p>
+  }
+
   return (
     <div className={className}>
-      {DisplayForm(initState, onSubmit, bookmark, DisplayFormButtons)}
+      <NewDisplayForm initState={initState} onSubmit={onSubmit} bookmark={bookmark} styledButtons={DisplayFormButtons} />
     </div>
   )
 }
