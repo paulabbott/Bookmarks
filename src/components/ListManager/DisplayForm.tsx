@@ -31,7 +31,7 @@ export function DisplayForm(initState: object, onSubmit: Function, bookmark = {}
   //TODO: make this generic and also pass in the setValues funciton?
   //TODO: can this be swapped for useReducer?
   const updateValues = (obj: object) => {
-    console.log('in updateValues with', obj)
+    console.log('DF in updateValues with', obj)
     //TODO: can we do better than 'as any'? Generic?
     let newValues = {} as any
     for (const [key, value] of Object.entries(obj)) {

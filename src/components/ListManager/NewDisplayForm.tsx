@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import { ValidateUrlFormatPromise, checkUrlExists } from '../../services/validationRules'
 import BookmarkEditBox from './BookmarkEditBox'
-import FormInputFields from './FormInputFields'
 import validateField from '../../services/validateField'
 import readTime from '../../services/readTime'
 import StyledButton from '../UI/StyledButton'
 import { Bookmark } from './ListManager'
 import { isPropertySignature } from "typescript";
 
-export const NewDisplayForm = ({ initState, onSubmit, styledButtons, bookmark }) => {
+export const NewDisplayForm = ({ initState, onSubmit, styledButtons, bookmark, children }) => {
 
     const [values, setValues] = useState<object>(() => {
         return (initState)
@@ -19,7 +18,7 @@ export const NewDisplayForm = ({ initState, onSubmit, styledButtons, bookmark })
     //TODO: make this generic and also pass in the setValues funciton?
     //TODO: can this be swapped for useReducer?
     const updateValues = (obj: object) => {
-        console.log('in updateValues with', obj)
+        console.log('NDF in updateValues with', obj)
         //TODO: can we do better than 'as any'? Generic?
         let newValues = {} as any
         for (const [key, value] of Object.entries(obj)) {
@@ -41,7 +40,7 @@ export const NewDisplayForm = ({ initState, onSubmit, styledButtons, bookmark })
     }
 
     const handleSubmit = async (e) => {
-        console.log('called in display form')
+        console.log('called in new display form')
         e.preventDefault();
         updateValues({ isWaiting: true })
         const validationResult = await validateField(values.url, validationRules)
@@ -51,7 +50,7 @@ export const NewDisplayForm = ({ initState, onSubmit, styledButtons, bookmark })
         updateValues({ isWaiting: false })
         if (validationResult.passedAll) {
             //TODO: rename onClickFunc?
-            onSubmit(values, updateValues)
+            onSubmit(bookmark, updateValues)
         } else {
             setTimedValidationMessage(validationResult.messages[0].errorMessage)
             console.log('validation failed', validationResult.messages[0].errorMessages)
@@ -81,7 +80,20 @@ export const NewDisplayForm = ({ initState, onSubmit, styledButtons, bookmark })
     }
 
     //NOTE: conditional rendering but hooks always get called. 
-    return values.showForm ? formView() : readView()
+    // return values.showForm ? formView() : readView()
+
+    return (
+        <div>
+            <form onSubmit={e => { handleSubmit(e) }}>
+                {React.Children.map(children, child => {
+                    return React.cloneElement(child, { values: values, updateValues: updateValues })
+                })}
+            </form>
+            <hr />
+        </div >
+    );
+
+
 
 }
 

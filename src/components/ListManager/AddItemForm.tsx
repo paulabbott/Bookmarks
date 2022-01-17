@@ -32,7 +32,9 @@ function AddBookmark({ addFunc }: { addFunc: Function }) {
     validationMessage: ''
   }
 
-  return <NewDisplayForm initState={initState} onSubmit={onSubmit} styledButtons={DisplayFormButtons} />
+  return <div>DEBUG</div>
+
+  // return <NewDisplayForm initState={initState} onSubmit={onSubmit} styledButtons={DisplayFormButtons} />
 }
 
 export default AddBookmark;

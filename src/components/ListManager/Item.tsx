@@ -4,6 +4,7 @@ import { DisplayForm } from './DisplayForm'
 import { Bookmark } from './ListManager';
 import StyledButton from '../UI/StyledButton'
 import { NewDisplayForm } from './NewDisplayForm'
+import FormInputFields from './FormInputFields'
 
 //TODO: change bookmark to be Bookmark | null
 type Props = {
@@ -25,9 +26,11 @@ const Item = ({ className, bookmark, editFunc, deleteFunc }: Props) => {
   }
 
   //this should probably be values rather than bookmark.
-  const onSubmit = (bookmark, updateValues) => {
+  const onSubmit = (values, updateValues) => {
+    console.log('in Item onSubmit with', values, updateValues);
+    console.log('bookmark=', bookmark);
     editFunc(bookmark)
-    updateValues({ showForm: false })
+    //updateValues({ showForm: false })
   }
 
   const deleteButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -44,7 +47,11 @@ const Item = ({ className, bookmark, editFunc, deleteFunc }: Props) => {
     updateValues({ showForm: false })
   }
 
-  const DisplayFormButtons = (values, updateValues) => {
+  //these were function params because that's how I was passing them from the render property of this
+  //component, but now I want them to be props because that's how I'm passing them using cloneElement
+  const DisplayFormButtons = ({ values, updateValues }) => {
+
+    // console.log('in DisplayFormButtons with ', values, updateValues);
     return (
       <React.Fragment>
         <StyledButton key='key-addButton' type='submit' wait={values.isWaiting} disabled={values.isWaiting}>
@@ -61,7 +68,6 @@ const Item = ({ className, bookmark, editFunc, deleteFunc }: Props) => {
           cancel
         </StyledButton>
       </React.Fragment>
-
     )
   }
 
@@ -76,15 +82,24 @@ const Item = ({ className, bookmark, editFunc, deleteFunc }: Props) => {
 
   */
 
-  const TestCompenent = () => {
-    return <p>testCompenent</p>
+
+  // return (
+  //   <div className={className}>
+  //     <NewDisplayForm initState={initState} onSubmit={onSubmit} bookmark={bookmark} styledButtons={DisplayFormButtons} />
+  //   </div>
+  // )
+
+  function WelcomeDialog() {
+    return (
+      <NewDisplayForm initState={initState} onSubmit={onSubmit} bookmark={bookmark}>
+        <FormInputFields />
+        <DisplayFormButtons />
+      </NewDisplayForm>
+    );
   }
 
-  return (
-    <div className={className}>
-      <NewDisplayForm initState={initState} onSubmit={onSubmit} bookmark={bookmark} styledButtons={DisplayFormButtons} />
-    </div>
-  )
+  return <WelcomeDialog />  
+
 }
 
 //TODO: move to the components folder?
