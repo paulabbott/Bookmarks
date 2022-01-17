@@ -1,19 +1,19 @@
 import React from "react";
 import { DisplayForm } from './DisplayForm'
 import StyledButton from '../UI/StyledButton'
-import validateField from "../../services/validateField";
-import { NewDisplayForm } from "./NewDisplayForm";
+import FormInputFields from './FormInputFields'
+import { FormAndData } from "./Types/FormAndData";
 
 function AddBookmark({ addFunc }: { addFunc: Function }) {
 
-  const DisplayFormButtons = (values, updateValues) => {
+  const AddFormButtons = ({ values, updateValues }: { values: FormAndData, updateValues: Function }) => {
     return (<StyledButton key='key-addButton' type='submit' wait={values.isWaiting} disabled={values.isWaiting}>
       {values.isWaiting ? 'wait' : 'add2'}
     </StyledButton>
     )
   }
 
-  const onSubmit = (values, updateValues) => {
+  const onSubmit = (values: FormAndData, updateValues: Function) => {
     //create a new bookmark and add it
     const newBookmark = {
       url: values.url,
@@ -32,7 +32,13 @@ function AddBookmark({ addFunc }: { addFunc: Function }) {
     validationMessage: ''
   }
 
-  return <NewDisplayForm initState={initState} onSubmit={onSubmit} styledButtons={DisplayFormButtons} />
+  //So ideally <FormInputFields/> and <EditFormButtons/> would be children of <DisplayForm/>
+
+  return <DisplayForm
+    initState={initState}
+    onSubmit={onSubmit}
+    FormInputFields={FormInputFields}
+    StyledButtons={AddFormButtons} />
 }
 
 export default AddBookmark;

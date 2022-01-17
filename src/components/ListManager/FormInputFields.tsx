@@ -1,6 +1,9 @@
 import React from 'react';
+import { FormAndData } from "./Types/FormAndData";
 
-const FormInputFields = (values, updateValues) => {
+type Props = { values: FormAndData, updateValues: Function }
+
+const FormInputFields = ({ values, updateValues }: Props) => {
 
     //generic handleChange funciton for all inputs
     const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {

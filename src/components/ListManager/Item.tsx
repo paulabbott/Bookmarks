@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { DisplayForm } from './DisplayForm'
 import { Bookmark } from './ListManager';
 import StyledButton from '../UI/StyledButton'
-import { NewDisplayForm } from './NewDisplayForm'
+import FormInputFields from './FormInputFields'
 
 //TODO: change bookmark to be Bookmark | null
 type Props = {
@@ -44,7 +44,7 @@ const Item = ({ className, bookmark, editFunc, deleteFunc }: Props) => {
     updateValues({ showForm: false })
   }
 
-  const DisplayFormButtons = (values, updateValues) => {
+  const EditFormButtons = ({ values, updateValues }) => {
     return (
       <React.Fragment>
         <StyledButton key='key-addButton' type='submit' wait={values.isWaiting} disabled={values.isWaiting}>
@@ -66,25 +66,19 @@ const Item = ({ className, bookmark, editFunc, deleteFunc }: Props) => {
   }
 
 
-  //so last bit of the puzzel pass updateValues to the buttons object so it can reset form values?
-  //sould maybe split form init state ie open/closed and data init state, ie bookmark.
-  /*
-<NewDisplayForm initState={initState} onSubmit={onSubmit} >
-          <FormInputFields bookmark={bookmark} values updateValues>
-          <DisplayFormButtons values updateValues/>
-</NewDisplayForm>
-
-  */
-
-  const TestCompenent = () => {
-    return <p>testCompenent</p>
-  }
+  //So ideally <FormInputFields/> and <EditFormButtons/> would be children of <DisplayForm/>
 
   return (
     <div className={className}>
-      <NewDisplayForm initState={initState} onSubmit={onSubmit} bookmark={bookmark} styledButtons={DisplayFormButtons} />
+      <DisplayForm
+        initState={initState}
+        onSubmit={onSubmit}
+        bookmark={bookmark}
+        FormInputFields={FormInputFields}
+        StyledButtons={EditFormButtons} />
     </div>
   )
+
 }
 
 //TODO: move to the components folder?
