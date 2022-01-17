@@ -8,7 +8,6 @@ function App() {
   return (
     <div>
       <ListManager UID="Things1" />
-      <ListManager UID="Things2" />
     </div>
   );
 

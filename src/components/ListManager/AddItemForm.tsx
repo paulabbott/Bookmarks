@@ -2,27 +2,9 @@ import React from "react";
 import { DisplayForm } from './DisplayForm'
 import StyledButton from '../UI/StyledButton'
 import validateField from "../../services/validateField";
-import { NewDisplayForm } from "./NewDisplayForm";
+import FormInputFields from './FormInputFields'
 
 function AddBookmark({ addFunc }: { addFunc: Function }) {
-
-  const DisplayFormButtons = (values, updateValues) => {
-    return (<StyledButton key='key-addButton' type='submit' wait={values.isWaiting} disabled={values.isWaiting}>
-      {values.isWaiting ? 'wait' : 'add2'}
-    </StyledButton>
-    )
-  }
-
-  const onSubmit = (values, updateValues) => {
-    //create a new bookmark and add it
-    const newBookmark = {
-      url: values.url,
-      urlDesc: values.urlDesc,
-      created: + new Date()
-    }
-    addFunc(newBookmark)
-    updateValues({ url: '', urlDesc: '' })
-  }
 
   const initState = {
     showForm: true,
@@ -32,9 +14,30 @@ function AddBookmark({ addFunc }: { addFunc: Function }) {
     validationMessage: ''
   }
 
-  return <div>DEBUG</div>
+  const onSubmit = (values, updateValues) => {
+    const newBookmark = {
+      url: values.url,
+      urlDesc: values.urlDesc,
+      created: + new Date()
+    }
+    addFunc(newBookmark)
+    updateValues({ url: '', urlDesc: '' })
+  }
 
-  // return <NewDisplayForm initState={initState} onSubmit={onSubmit} styledButtons={DisplayFormButtons} />
+  const AddFormButtons = ({ values, updateValues }) => {
+    return (<StyledButton key={'key' + 'addButton'} type='submit' wait={values.isWaiting} disabled={values.isWaiting}>
+      {values.isWaiting ? 'wait' : 'add'}
+    </StyledButton>
+    )
+  }
+
+  return (
+    <DisplayForm initState={initState} onSubmit={onSubmit}>
+      <FormInputFields />
+      <AddFormButtons />
+    </DisplayForm>
+  )
+
 }
 
 export default AddBookmark;

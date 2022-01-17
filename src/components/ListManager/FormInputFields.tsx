@@ -2,8 +2,6 @@ import React from 'react';
 
 const FormInputFields = ({ values, updateValues }) => {
 
-    // console.log('in FormInputFields with', values, updateValues)
-
     //generic handleChange funciton for all inputs
     const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         updateValues({ [event.target.id]: event.target.value })

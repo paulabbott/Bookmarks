@@ -10,14 +10,14 @@ export default async function validateField(url, validationRules) {
     await asyncForEach(validationRules, async (rule) => {
         if (passedAllSoFar) {
             const result = await rule(url);
-            console.log('result=', result);
+            // console.log('result=', result);
             if (!result.passed) {
                 messages.push(result)
                 passedAllSoFar = false
             }
         }
     })
-    console.log('passedAllSoFar=', passedAllSoFar);
+    // console.log('passedAllSoFar=', passedAllSoFar);
     return { passedAll: passedAllSoFar, messages: messages }
 }
 

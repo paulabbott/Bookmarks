@@ -13,11 +13,13 @@ export interface Bookmark {
     created: number
 }
 
+//could pass UID down (or use context) to guarantee unquie keys
+//if the compent is self contained in it's own right I think react will handle this for us.
 type Props = {
     UID: string
   }
 
-//use React.FC to type components
+//use React.FC to type components or JSX.element - ?
 const ListManager = ({ UID }: Props ) => {
     
     //NOTE: using a function to set inital value from localStorage
@@ -30,8 +32,6 @@ const ListManager = ({ UID }: Props ) => {
     useEffect(() => {
         localStorage.setItem(UID + "List", JSON.stringify(bookmarks));
     }, [UID, bookmarks]);
-
-
 
     const addBookmark = (bookmark: Bookmark) => {
         setBookmarks([...bookmarks, bookmark]);
@@ -59,11 +59,11 @@ const ListManager = ({ UID }: Props ) => {
 
     return (
         <StyledSection>
-            <hr />
             <h1>{UID}</h1>
             <StyledButton onClick={deleteAllClick}>delete all</StyledButton>
             <AddItemForm addFunc={addBookmark} />
             <ItemList bookmarks={bookmarks} editFunc={editBookmark} deleteFunc={deleteBookmark} />
+            <hr />
         </StyledSection>
     );
 }
