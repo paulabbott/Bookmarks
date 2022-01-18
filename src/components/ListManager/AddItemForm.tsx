@@ -1,10 +1,9 @@
 import React from "react";
 import { DisplayForm } from './DisplayForm'
 import StyledButton from '../UI/StyledButton'
-import validateField from "../../services/validateField";
 import FormInputFields from './FormInputFields'
 
-function AddBookmark({ addFunc }: { addFunc: Function }) {
+function AddItemForm({ addFunc }: { addFunc: Function }) {
 
   const initState = {
     showForm: true,
@@ -14,6 +13,7 @@ function AddBookmark({ addFunc }: { addFunc: Function }) {
     validationMessage: ''
   }
 
+  //TODO: onSuccess 
   const onSubmit = (values, updateValues) => {
     const newBookmark = {
       url: values.url,
@@ -31,6 +31,7 @@ function AddBookmark({ addFunc }: { addFunc: Function }) {
     )
   }
 
+  //TODO: onSuccess 
   return (
     <DisplayForm initState={initState} onSubmit={onSubmit}>
       <FormInputFields />
@@ -40,4 +41,4 @@ function AddBookmark({ addFunc }: { addFunc: Function }) {
 
 }
 
-export default AddBookmark;
+export default AddItemForm;

@@ -27,8 +27,8 @@ export const DisplayForm = ({ initState, onSubmit, bookmark, children }) => {
         });
     }
 
+    //TODO: move to a validation component
     const setTimedValidationMessage = (flashMessage = "") => {
-        // setValidationMessage(flashMessage)
         updateValues({ validationMessage: flashMessage })
         const delay = readTime(flashMessage)
         setTimeout(() => { updateValues({ validationMessage: '' }) }, delay * 3)
@@ -43,6 +43,7 @@ export const DisplayForm = ({ initState, onSubmit, bookmark, children }) => {
             })
         updateValues({ isWaiting: false })
         if (validationResult.passedAll) {
+            //onSuccess 
             onSubmit(values, updateValues)
         } else {
             setTimedValidationMessage(validationResult.messages[0].errorMessage)
