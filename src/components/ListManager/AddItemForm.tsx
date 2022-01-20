@@ -1,42 +1,39 @@
-import React from "react";
-import { DisplayForm } from './DisplayForm'
-import StyledButton from '../UI/StyledButton'
+import React, { useContext } from "react";
+import { FormProvider } from './FormProvider'
 import FormInputFields from './FormInputFields'
+import AddFormButtons from './AddFormButtons'
+
+//NOTE: this compentent displays the form for adding a new item to the list.
+// the inputs fields and the buttons are compenent defined in seperate files.
+// the FormProvider component wraps both of these in a form tag and makes the data
+// and function(s) avaliable to them with useContext.
 
 function AddItemForm({ addFunc }: { addFunc: Function }) {
 
   const initState = {
-    showForm: true,
     url: '',
     urlDesc: '',
     isWaiting: false,
     validationMessage: ''
   }
 
-  //TODO: onSuccess 
+  //TODO: onSuccess
   const onSubmit = (values, updateValues) => {
     const newBookmark = {
       url: values.url,
       urlDesc: values.urlDesc,
-      created: + new Date()
+      created: + new Date() 
     }
     addFunc(newBookmark)
     updateValues({ url: '', urlDesc: '' })
   }
 
-  const AddFormButtons = ({ values, updateValues }) => {
-    return (<StyledButton key={'key' + 'addButton'} type='submit' wait={values.isWaiting} disabled={values.isWaiting}>
-      {values.isWaiting ? 'wait' : 'add'}
-    </StyledButton>
-    )
-  }
-
   //TODO: onSuccess 
   return (
-    <DisplayForm initState={initState} onSubmit={onSubmit}>
+    <FormProvider initState={initState} onSubmit={onSubmit}>
       <FormInputFields />
       <AddFormButtons />
-    </DisplayForm>
+    </FormProvider>
   )
 
 }

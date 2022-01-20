@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import StyledBookmark from './Item'
 import StyledButton from '../UI/StyledButton'
 import { Bookmark } from './ListManager';
+import EditableItem from './EditableItem'
 
 //TODO: extract the pagination
 
@@ -48,7 +48,7 @@ const ItemList = ({ bookmarks, editFunc, deleteFunc }: Props ) => {
     <div>
       <div>
         {bookmarks.slice(currentPage * pageSize, currentPage * pageSize + pageSize).map((v, i) => {
-          return <StyledBookmark key={'test' + v.created} bookmark={v} editFunc={editFunc} deleteFunc={deleteFunc} />
+          return <EditableItem key={'test' + v.created} bookmark={v} editFunc={editFunc} deleteFunc={deleteFunc} />
         })}
       </div>
       <div>

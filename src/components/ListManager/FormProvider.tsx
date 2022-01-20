@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { ValidateUrlFormatPromise, checkUrlExists } from '../../services/validationRules'
 import BookmarkEditBox from './BookmarkEditBox'
 import validateField from '../../services/validateField'
 import readTime from '../../services/readTime'
 import StyledButton from '../UI/StyledButton'
 import { Bookmark } from './ListManager'
+import FormContext from "./FormContext";
 
-export const DisplayForm = ({ initState, onSubmit, bookmark, children }) => {
+//NOTE: this compent manages the data for the form state, including inputs, readOnly and isWaiting
+//is wraps it's children in a form tag and a context provider so they can acess the values and the setter function
+
+export const FormProvider = ({ initState, onSubmit, bookmark, children }) => {
 
     const [values, setValues] = useState<object>(() => {
         return (initState)
@@ -16,6 +20,7 @@ export const DisplayForm = ({ initState, onSubmit, bookmark, children }) => {
 
     //have to use prevState in setValues because of closures
     //ref: https://reactjs.org/docs/hooks-reference.html#usestate
+    //TODO: look at what other people do, maybe you can just spread both objects together.
     const updateValues = (obj: object) => {
         //TODO: can we do better than 'as any'? Generic?
         let newValues = {} as any
@@ -27,7 +32,7 @@ export const DisplayForm = ({ initState, onSubmit, bookmark, children }) => {
         });
     }
 
-    //TODO: move to a validation component
+    //TODO: move to a validation/flashMessages component
     const setTimedValidationMessage = (flashMessage = "") => {
         updateValues({ validationMessage: flashMessage })
         const delay = readTime(flashMessage)
@@ -51,30 +56,15 @@ export const DisplayForm = ({ initState, onSubmit, bookmark, children }) => {
         }
     }
 
-    //display the form in onlyread mode
-    const readView = () => {
-        return (
-            <div>
-                <a rel="noreferrer" target="_blank" href={bookmark.url}>{bookmark.url}</a>
-                &nbsp;<StyledButton onClick={() => updateValues({ showForm: true })}>edit</StyledButton>
-            </div>
-        )
-    }
-
-    //display the form inputs and the custom buttons.
-    const formView = () => {
-        return (
+    return (
+        <FormContext.Provider value={{ values, updateValues }}>
             <BookmarkEditBox>
                 <form onSubmit={e => { handleSubmit(e) }}>
-                    {React.Children.map(children, child => {
-                        return React.cloneElement(child, { values: values, updateValues: updateValues })
-                    })}
+                    {children}
                 </form>
             </BookmarkEditBox>
-        )
-    }
+        </FormContext.Provider>
+    )
 
-    //NOTE: conditional rendering but hooks always get called. 
-    return values.showForm ? formView() : readView()
 }
 

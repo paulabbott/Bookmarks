@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import FormContext from './FormContext';
 
-const FormInputFields = ({ values, updateValues }) => {
+//NOTE: contains the input fields of the form which are common to both AddItemForm and EditItem(Form)
+// gains access to the values and update function using useContext
+
+export default () => {
+
+    const formValues = useContext(FormContext);
 
     //generic handleChange funciton for all inputs
     const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-        updateValues({ [event.target.id]: event.target.value })
+        formValues.updateValues({ [event.target.id]: event.target.value })
     }
 
     return (
@@ -13,21 +19,19 @@ const FormInputFields = ({ values, updateValues }) => {
             <input
                 id='url'
                 type='text'
-                value={values.url}
+                value={formValues.values.url}
                 onChange={handleChange}
             />
-            &nbsp;<span>{values.validationMessage}</span>
+            &nbsp;<span>{formValues.values.validationMessage}</span>
             <br />
             <label htmlFor='urlDesc'>notes:</label>
             <input
                 id='urlDesc'
                 type='text'
-                value={values.urlDesc}
+                value={formValues.values.urlDesc}
                 onChange={handleChange}
             />
             <br />
         </React.Fragment>
     )
 }
-
-export default FormInputFields

@@ -5,7 +5,6 @@ import AddItemForm from './AddItemForm'
 import StyledButton from '../UI/StyledButton'
 import StyledSection from '../UI/StyledSection'
 
-
 // TODO: move this to a seperte file?
 export interface Bookmark {
     url: string,
@@ -56,6 +55,10 @@ const ListManager = ({ UID }: Props ) => {
     const deleteAllClick = () => {
         setBookmarks([]);
     }
+
+    //NOTE: this file manages the global data object for the Bookmarks
+    //reads and writes in localStorage when ever it changes and passes it down using props into the ItemList
+    //could bundle all the functions up into an object, or use another useContext pattern - which would be nice.
 
     return (
         <StyledSection>
