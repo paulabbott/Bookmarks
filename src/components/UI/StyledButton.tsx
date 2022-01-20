@@ -1,12 +1,10 @@
 import styled from 'styled-components'
 
-//TODO: how do I type the props used in a styled component?
-
 type Props = {
-  wait: boolean
+  wait?: boolean
 }
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<Props>`
   border-radius: 10px;
   border: 0;
   background-color: ${props => props.wait ? "pink" : "lightgrey"};  

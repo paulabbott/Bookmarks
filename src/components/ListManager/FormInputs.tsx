@@ -4,9 +4,26 @@ import FormContext from './FormContext';
 //NOTE: contains the input fields of the form which are common to both AddItemForm and EditItem(Form)
 // gains access to the values and update function using useContext
 
+//TODO: does it make sense to define formType here
+export type formValuesTypes =
+    {
+        url: string,
+        urlDesc: string,
+        validationMessage: string,
+        isWaiting: boolean
+
+    }
+
+export type formValuesAndFunctionType =
+    {
+        values: formValuesTypes,
+        updateValues: Function
+    }
+
 export default () => {
 
-    const formValues = useContext(FormContext);
+    //TODO: can we get rid of | null
+    const formValues: formValuesAndFunctionType = useContext(FormContext);
 
     //generic handleChange funciton for all inputs
     const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {

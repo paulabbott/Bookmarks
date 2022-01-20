@@ -1,16 +1,23 @@
 import React, { useContext } from "react";
 import StyledButton from "../UI/StyledButton";
 
-const DisplayItem = ({ bookmark, setEditing }: Props) => {
+//TODO: try here and then import from somewhere consitent
+type Bookmark = {
+    url: string,
+    urlDesc: string,
+    created: number
+}
 
-    const showForm = (e) => {
-        e.preventDefault()
-        setEditing(true)
-    }
+type props = {
+    bookmark: Bookmark,
+    setEditing: Function
+}
+
+const DisplayItem = ({ bookmark, setEditing }: props) => {
 
     return (
         <div>
-            <a rel="noreferrer" target="_blank" href={bookmark.url}>{bookmark.url}</a> &nbsp; <StyledButton onClick={showForm}>edit</StyledButton>
+            <a rel="noreferrer" target="_blank" href={bookmark.url}>{bookmark.url}</a> &nbsp; <StyledButton onClick={() => setEditing(true)}>edit</StyledButton>
         </div>
     )
 

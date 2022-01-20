@@ -1,12 +1,12 @@
 
 import React, { useState, useEffect} from 'react';
-import ItemList from './ItemList';
-import AddItemForm from './AddItemForm'
+import ItemList from './ListItems';
+import AddForm from './AddForm'
 import StyledButton from '../UI/StyledButton'
 import StyledSection from '../UI/StyledSection'
 
-// TODO: move this to a seperte file?
-export interface Bookmark {
+// TODO: dryup
+type Bookmark = {
     url: string,
     urlDesc: string,
     created: number
@@ -64,7 +64,7 @@ const ListManager = ({ UID }: Props ) => {
         <StyledSection>
             <h1>{UID}</h1>
             <StyledButton onClick={deleteAllClick}>delete all</StyledButton>
-            <AddItemForm addFunc={addBookmark} />
+            <AddForm addFunc={addBookmark} />
             <ItemList bookmarks={bookmarks} editFunc={editBookmark} deleteFunc={deleteBookmark} />
             <hr />
         </StyledSection>

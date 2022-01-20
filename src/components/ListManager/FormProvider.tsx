@@ -4,15 +4,27 @@ import BookmarkEditBox from './BookmarkEditBox'
 import validateField from '../../services/validateField'
 import readTime from '../../services/readTime'
 import StyledButton from '../UI/StyledButton'
-import { Bookmark } from './ListManager'
 import FormContext from "./FormContext";
 
 //NOTE: this compent manages the data for the form state, including inputs, readOnly and isWaiting
 //is wraps it's children in a form tag and a context provider so they can acess the values and the setter function
 
-export const FormProvider = ({ initState, onSubmit, bookmark, children }) => {
+type formValuesTypes = {
+    url: string,
+    urlDesc: string,
+    validationMessage?: string,
+    isWaiting?: boolean
+}
 
-    const [values, setValues] = useState<object>(() => {
+type Props = {
+    initState: formValuesTypes,
+    onSuccess: Function,
+    children: React.ReactNode
+}
+
+export const FormProvider = ({ initState, onSuccess, children }: Props) => {
+
+    const [values, setValues] = useState(() => {
         return (initState)
     })
 
@@ -33,13 +45,15 @@ export const FormProvider = ({ initState, onSubmit, bookmark, children }) => {
     }
 
     //TODO: move to a validation/flashMessages component
+    // I think this is the only file that use validation message which
+    // means it doesn't need to be held in the context state
     const setTimedValidationMessage = (flashMessage = "") => {
         updateValues({ validationMessage: flashMessage })
         const delay = readTime(flashMessage)
         setTimeout(() => { updateValues({ validationMessage: '' }) }, delay * 3)
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         updateValues({ isWaiting: true })
         const validationResult = await validateField(values.url, validationRules)
@@ -48,16 +62,18 @@ export const FormProvider = ({ initState, onSubmit, bookmark, children }) => {
             })
         updateValues({ isWaiting: false })
         if (validationResult.passedAll) {
-            //onSuccess 
-            onSubmit(values, updateValues)
+            onSuccess(values, updateValues)
         } else {
             setTimedValidationMessage(validationResult.messages[0].errorMessage)
             console.log('validation failed', validationResult.messages[0].errorMessages)
         }
     }
 
+    const temp: { values: formValuesTypes, updateValues: Function } = { values, updateValues }
+
+    //TODO: going to need some help typing value
     return (
-        <FormContext.Provider value={{ values, updateValues }}>
+        <FormContext.Provider value={temp}>
             <BookmarkEditBox>
                 <form onSubmit={e => { handleSubmit(e) }}>
                     {children}

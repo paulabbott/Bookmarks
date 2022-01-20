@@ -1,10 +1,14 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components'
 import { FormProvider } from './FormProvider'
-import { Bookmark } from './ListManager';
-import FormInputFields from './FormInputFields'
+import FormInputFields from './FormInputs'
 import EditFormButtons from './EditFormButtons'
-import DisplayItem from './DisplayItem'
+
+type Bookmark = {
+  url: string,
+  urlDesc: string,
+  created: number
+}
 
 //TODO: change bookmark to be Bookmark | null - ?
 type Props = {
@@ -25,8 +29,13 @@ const EditItemFormComponent = ({ className, bookmark, editFunc, deleteFunc, setE
     validationMessage: ''
   }
 
-  //TODO: cahnge name onSuccess 
-  const onSubmit = (values, updateValues) => {
+  //TODO: try and move to file.
+  type valuesType = {
+    url: string,
+    urlDesc: string
+  }
+
+  const onSuccess = (values: valuesType, updateValues: Function) => {
     //create a new bookmark and pass it back to update the main data store
     const updateBookmark = {
       url: values.url,
@@ -39,7 +48,7 @@ const EditItemFormComponent = ({ className, bookmark, editFunc, deleteFunc, setE
 
   //TODO: setEditing => toggleForm? OpenForm(ture) editMode(false)
   return (
-    <FormProvider initState={initState} onSubmit={onSubmit} bookmark={bookmark}>
+    <FormProvider initState={initState} onSuccess={onSuccess}>
       <FormInputFields />
       <EditFormButtons deleteFunc={deleteFunc} bookmark={bookmark} setEditing={setEditing} />
     </FormProvider>

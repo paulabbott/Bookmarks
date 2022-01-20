@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { FormProvider } from './FormProvider'
-import FormInputFields from './FormInputFields'
+import FormInputs from './FormInputs'
 import AddFormButtons from './AddFormButtons'
 
 //NOTE: this compentent displays the form for adding a new item to the list.
@@ -17,21 +17,27 @@ function AddItemForm({ addFunc }: { addFunc: Function }) {
     validationMessage: ''
   }
 
-  //TODO: onSuccess
-  const onSubmit = (values, updateValues) => {
+  //TODO: try and move to file.
+  type valuesType = {
+    url: string,
+    urlDesc: string
+  }
+
+  //NOTE: values and updateValues are passed in by the formProvider. What type should they be?
+  //TODO: object should be more specific
+  const onSuccess = (values: valuesType, updateValues: Function) => {
     const newBookmark = {
       url: values.url,
       urlDesc: values.urlDesc,
-      created: + new Date() 
+      created: + new Date()
     }
     addFunc(newBookmark)
     updateValues({ url: '', urlDesc: '' })
   }
 
-  //TODO: onSuccess 
   return (
-    <FormProvider initState={initState} onSubmit={onSubmit}>
-      <FormInputFields />
+    <FormProvider initState={initState} onSuccess={onSuccess}>
+      <FormInputs />
       <AddFormButtons />
     </FormProvider>
   )

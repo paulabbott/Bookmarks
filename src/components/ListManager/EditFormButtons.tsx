@@ -2,7 +2,20 @@ import React, { useContext } from 'react'
 import StyledButton from '../UI/StyledButton';
 import FormContext from './FormContext'
 
-const EditFormButtons = ({ deleteFunc, bookmark, setEditing }) => {
+//TODO: dryup
+type Bookmark = {
+    url: string,
+    urlDesc: string,
+    created: number
+}
+
+type props = {
+    deleteFunc: Function,
+    bookmark: Bookmark,
+    setEditing: Function
+}
+
+const EditFormButtons = ({ deleteFunc, bookmark, setEditing }: props) => {
 
     const formValues = useContext(FormContext);
 
@@ -11,7 +24,7 @@ const EditFormButtons = ({ deleteFunc, bookmark, setEditing }) => {
         deleteFunc(bookmark)
     }
 
-    const cancelButtonClick = (e: React.MouseEvent<HTMLButtonElement>, updateValues: Function) => {
+    const cancelButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setEditing(false)
     }
@@ -33,7 +46,7 @@ const EditFormButtons = ({ deleteFunc, bookmark, setEditing }) => {
 
             <StyledButton
                 key={'key' + bookmark.created + 'cancel'}
-                onClick={(e) => cancelButtonClick(e,)}>
+                onClick={(e) => cancelButtonClick(e)}>
                 cancel
             </StyledButton>
         </React.Fragment>
