@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import StyledButton from '../UI/StyledButton'
 import EditableItem from './EditableItem'
+import { BookmarkType } from '../../types/BookmarkType'
 
 //TODO: extract the pagination
 
-//TODO: dryup
-type Bookmark = {
-  url: string,
-  urlDesc: string,
-  created: number
-}
-
 type Props = {
-  bookmarks: Bookmark[],
+  bookmarks: BookmarkType[],
   editFunc: Function,
   deleteFunc: Function
 }
 
 const ItemList = ({ bookmarks, editFunc, deleteFunc }: Props) => {
-  const pageSize = 3
+  const pageSize = 3 //TODO: config. prop?
   const [currentPage, setCurrentPage] = useState(0)
 
   var numOfPages = Math.ceil(bookmarks.length / pageSize)

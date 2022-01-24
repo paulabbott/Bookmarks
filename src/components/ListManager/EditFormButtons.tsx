@@ -1,17 +1,11 @@
 import React, { useContext } from 'react'
 import StyledButton from '../UI/StyledButton';
 import FormContext from './FormContext'
-
-//TODO: dryup
-type Bookmark = {
-    url: string,
-    urlDesc: string,
-    created: number
-}
+import { BookmarkType } from '../../types/BookmarkType'
 
 type props = {
     deleteFunc: Function,
-    bookmark: Bookmark,
+    bookmark: BookmarkType,
     setEditing: Function
 }
 

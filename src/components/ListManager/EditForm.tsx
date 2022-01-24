@@ -3,19 +3,14 @@ import styled from 'styled-components'
 import FormProvider from './FormProvider'
 import FormInputFields from './FormInputs'
 import EditFormButtons from './EditFormButtons'
+import { BookmarkType } from '../../types/BookmarkType'
+import { formValuesType } from '../../types/formValuesType'
 
-type Bookmark = {
-  url: string,
-  urlDesc: string,
-  created: number
-}
-
-//TODO: change bookmark to be Bookmark | null - ?
+//set className prop is optional, since TypeScript won't know that it's passed by the wrapper
+//ref: https://styled-components.com/docs/api#typescript
 type Props = {
-  //This prop is optional, since TypeScript won't know that it's passed by the wrapper
-  //ref: https://styled-components.com/docs/api#typescript
   className?: string,
-  bookmark: Bookmark,
+  bookmark: BookmarkType,
   editFunc: Function,
   deleteFunc: Function,
   setEditing: Function
@@ -31,13 +26,8 @@ const EditFormComponent = ({ className, bookmark, editFunc, deleteFunc, setEditi
     validationMessage: ''
   }
 
-  //TODO: try and move to file.
-  type valuesType = {
-    url: string,
-    urlDesc: string
-  }
-
-  const onSuccess = (values: valuesType, updateValues: Function) => {
+  //doesn't need the whole form values object, just need the Bookmark values, should be Bookmarkstype.
+  const onSuccess = (values: BookmarkType, updateValues: Function) => {
     //create a new bookmark and pass it back to update the main data store
     const updateBookmark = {
       url: values.url,

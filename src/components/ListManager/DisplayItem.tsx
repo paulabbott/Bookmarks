@@ -1,15 +1,9 @@
 import React, { useContext } from "react";
 import StyledButton from "../UI/StyledButton";
-
-//TODO: try here and then import from somewhere consitent
-type Bookmark = {
-    url: string,
-    urlDesc: string,
-    created: number
-}
+import { BookmarkType } from '../../types/BookmarkType'
 
 type props = {
-    bookmark: Bookmark,
+    bookmark: BookmarkType,
     setEditing: Function
 }
 

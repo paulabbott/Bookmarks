@@ -4,13 +4,7 @@ import ItemList from './ListItems';
 import AddForm from './AddForm'
 import StyledButton from '../UI/StyledButton'
 import StyledSection from '../UI/StyledSection'
-
-// TODO: dryup
-type Bookmark = {
-    url: string,
-    urlDesc: string,
-    created: number
-}
+import { BookmarkType } from '../../types/BookmarkType'
 
 //could pass UID down (or use context) to guarantee unquie keys
 //if the compent is self contained in it's own right I think react will handle this for us.
@@ -32,19 +26,19 @@ const ListManager = ({ UID }: Props ) => {
         localStorage.setItem(UID + "List", JSON.stringify(bookmarks));
     }, [UID, bookmarks]);
 
-    const addBookmark = (bookmark: Bookmark) => {
+    const addBookmark = (bookmark: BookmarkType) => {
         setBookmarks([...bookmarks, bookmark]);
     }
 
     // Use the created timestamp to match the bookmark and update it with the new one
-    const editBookmark = (newBookmark: Bookmark) => {
+    const editBookmark = (newBookmark: BookmarkType) => {
         const updatedBookmarks = bookmarks.map((item) => {
             return (item.created === newBookmark.created) ? newBookmark : item
         })
         setBookmarks(updatedBookmarks);
     }
 
-    const deleteBookmark = (bookmark: Bookmark) => {
+    const deleteBookmark = (bookmark: BookmarkType) => {
         const updated = bookmarks.filter((item) => {
             //return everything except matched
             return (item.created !== bookmark.created)

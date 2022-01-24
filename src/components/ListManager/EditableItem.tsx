@@ -1,16 +1,11 @@
 import React, { useState } from "react";
 import DisplayItem from './DisplayItem'
 import EditForm from './EditForm'
+import { BookmarkType } from '../../types/BookmarkType'
 
-//TODO: try here and then import from somewhere consitent
-type Bookmark = {
-    url: string,
-    urlDesc: string,
-    created: number
-}
 
 type props = {
-    bookmark: Bookmark,
+    bookmark: BookmarkType,
     editFunc: Function,
     deleteFunc: Function,
 }
@@ -27,8 +22,6 @@ const EditableItem = ({ bookmark, editFunc, deleteFunc }: props) => {
             <DisplayItem bookmark={bookmark} setEditing={setEditing} />
         )
     }
-
-
 
 }
 export default EditableItem

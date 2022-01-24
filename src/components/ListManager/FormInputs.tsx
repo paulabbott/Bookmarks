@@ -1,23 +1,14 @@
 import React, { useContext } from 'react';
 import FormContext from './FormContext';
+import { formValuesType } from '../../types/formValuesType'
 
 //NOTE: contains the input fields of the form which are common to both AddItemForm and EditItem(Form)
 // gains access to the values and update function using useContext
 
-//TODO: does it make sense to define formType here
-export type formValuesTypes =
-    {
-        url: string,
-        urlDesc: string,
-        validationMessage: string,
-        isWaiting: boolean
-
-    }
-
 export type formValuesAndFunctionType =
     {
-        values: formValuesTypes,
-        updateValues: Function
+        values: formValuesType,
+        updateValues: Function // TODO: erm this caused problems somewhere else?
     }
 
 export default () => {

@@ -2,6 +2,7 @@ import React from "react";
 import FormProvider from './FormProvider'
 import FormInputs from './FormInputs'
 import AddFormButtons from './AddFormButtons'
+import { BookmarkType } from '../../types/BookmarkType'
 
 //NOTE: this compentent displays the form for adding a new item to the list.
 // the inputs fields and the buttons are compenent defined in seperate files.
@@ -15,14 +16,6 @@ function AddItemForm({ addFunc }: { addFunc: Function }) {
     urlDesc: '',
     isWaiting: false,
     validationMessage: ''
-  }
-
-  //TODO: try and move to file.
-  //TODO: is this really a BookmarkType or a FormsValuesType
-  type BookmarkType = {
-    url: string,
-    urlDesc: string,
-    created?: number
   }
 
   //NOTE: values and updateValues are passed in by the formProvider. What type should they be?
