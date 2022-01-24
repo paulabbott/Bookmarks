@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components'
-import { FormProvider } from './FormProvider'
+import FormProvider from './FormProvider'
 import FormInputFields from './FormInputs'
 import EditFormButtons from './EditFormButtons'
 
@@ -12,7 +12,9 @@ type Bookmark = {
 
 //TODO: change bookmark to be Bookmark | null - ?
 type Props = {
-  className: string,
+  //This prop is optional, since TypeScript won't know that it's passed by the wrapper
+  //ref: https://styled-components.com/docs/api#typescript
+  className?: string,
   bookmark: Bookmark,
   editFunc: Function,
   deleteFunc: Function,
@@ -20,7 +22,7 @@ type Props = {
 }
 
 //NOTE: className allows it to be wrapped in a styled component
-const EditItemFormComponent = ({ className, bookmark, editFunc, deleteFunc, setEditing }: Props) => {
+const EditFormComponent = ({ className, bookmark, editFunc, deleteFunc, setEditing }: Props) => {
 
   const initState = {
     url: bookmark.url,
@@ -57,11 +59,12 @@ const EditItemFormComponent = ({ className, bookmark, editFunc, deleteFunc, setE
 }
 
 //TODO: move to the components folder?
-const EditItemForm = styled(EditItemFormComponent)`
+const EditForm = styled(EditFormComponent)`
   border-bottom: 1px solid lightgrey;
   margin:4px 0 4px 0;
   padding: 0 0 4px 0;
 `;
 
-export default EditItemForm;
+// export default EditItemForm;
+export default EditForm;
 

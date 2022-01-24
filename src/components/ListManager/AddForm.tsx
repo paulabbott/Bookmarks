@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { FormProvider } from './FormProvider'
+import React from "react";
+import FormProvider from './FormProvider'
 import FormInputs from './FormInputs'
 import AddFormButtons from './AddFormButtons'
 
@@ -18,14 +18,16 @@ function AddItemForm({ addFunc }: { addFunc: Function }) {
   }
 
   //TODO: try and move to file.
-  type valuesType = {
+  //TODO: is this really a BookmarkType or a FormsValuesType
+  type BookmarkType = {
     url: string,
-    urlDesc: string
+    urlDesc: string,
+    created?: number
   }
 
   //NOTE: values and updateValues are passed in by the formProvider. What type should they be?
   //TODO: object should be more specific
-  const onSuccess = (values: valuesType, updateValues: Function) => {
+  const onSuccess = (values: BookmarkType, updateValues: Function) => {
     const newBookmark = {
       url: values.url,
       urlDesc: values.urlDesc,

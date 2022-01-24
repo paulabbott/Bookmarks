@@ -1,6 +1,4 @@
-import React, { useState, useContext } from "react";
-import { FormProvider } from './FormProvider'
-import StyledButton from "../UI/StyledButton";
+import React, { useState } from "react";
 import DisplayItem from './DisplayItem'
 import EditForm from './EditForm'
 

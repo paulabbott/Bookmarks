@@ -1,4 +1,4 @@
-export default function readingTime(text) {
+export default function readingTime(text: string): number {
   const wordsPerMinute = 200;
   const noOfWords = text.split(' ').length;
   const minutes = noOfWords / wordsPerMinute;

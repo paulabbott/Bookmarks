@@ -3,7 +3,7 @@ import React from 'react';
 import ListManager from '../ListManager/ListManager';
 
 
-function App() {
+const App: React.FC = () => {
 
   return (
     <div>

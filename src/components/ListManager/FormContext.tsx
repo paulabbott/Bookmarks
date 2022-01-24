@@ -4,7 +4,7 @@ import formValuesTypes from './FormInputs'
 //useState<number | null>(null);
 //useState<objType | null>(null);
 
-//TODO: this doesn't quite feel right
+//TODO: this doesn't quite feel right, could just be in FormProvider.tsx?
 const emptyFormValues = {
     values: {
         url: '',
@@ -12,7 +12,7 @@ const emptyFormValues = {
         validationMessage: ',',
         isWaiting: false
     },
-    updateValues: () => { }
+    updateValues: (obj: object) => { } 
 }
 
 const FormContext = React.createContext(emptyFormValues);

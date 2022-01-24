@@ -1,23 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { ValidateUrlFormatPromise, checkUrlExists } from '../../services/validationRules'
 import BookmarkEditBox from './BookmarkEditBox'
 import validateField from '../../services/validateField'
 import readTime from '../../services/readTime'
-import StyledButton from '../UI/StyledButton'
 import FormContext from "./FormContext";
+import { ValidationResultType } from '../../types/validation'
+import { formValuesType } from '../../types/formValuesType'
 
 //NOTE: this compent manages the data for the form state, including inputs, readOnly and isWaiting
 //is wraps it's children in a form tag and a context provider so they can acess the values and the setter function
 
-type formValuesTypes = {
-    url: string,
-    urlDesc: string,
-    validationMessage?: string,
-    isWaiting?: boolean
-}
-
+//TODO: setting undefined here to see if that will fix the typescript error around line 73.
 type Props = {
-    initState: formValuesTypes,
+    initState: formValuesType,
     onSuccess: Function,
     children: React.ReactNode
 }
@@ -39,37 +34,42 @@ export const FormProvider = ({ initState, onSuccess, children }: Props) => {
         for (const [key, value] of Object.entries(obj)) {
             newValues[key] = value
         }
+        //TODO:Q setValues type returns void which means this function also return void. How do I type that.
         setValues(prevState => {
             return { ...prevState, ...newValues };
         });
     }
 
     //TODO: move to a validation/flashMessages component
-    // I think this is the only file that use validation message which
-    // means it doesn't need to be held in the context state
     const setTimedValidationMessage = (flashMessage = "") => {
         updateValues({ validationMessage: flashMessage })
         const delay = readTime(flashMessage)
         setTimeout(() => { updateValues({ validationMessage: '' }) }, delay * 3)
     }
 
+    //runs the validation and if it passes calls the passed in onSuccess funciton.
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         updateValues({ isWaiting: true })
-        const validationResult = await validateField(values.url, validationRules)
-            .catch(v => {
-                setTimedValidationMessage("sorry something went terribly wrong.")
-            })
+        //TODO:Q can't get typescript to stop defaulting to | void, maybe because the asyncForEach doesn't return a Promise
+        //validateField runs all the rules asyncronsly. and returns an object with passedAll true/false
+        //and the validation messages if there are any.
+        const validationResult: ValidationResultType = await validateField(values.url, validationRules)
         updateValues({ isWaiting: false })
         if (validationResult.passedAll) {
             onSuccess(values, updateValues)
         } else {
-            setTimedValidationMessage(validationResult.messages[0].errorMessage)
-            console.log('validation failed', validationResult.messages[0].errorMessages)
+            setTimedValidationMessage(validationResult.ruleResults[0].errorMessage)
+            console.log('validation failed', validationResult.ruleResults[0].errorMessage)
         }
     }
 
-    const temp: { values: formValuesTypes, updateValues: Function } = { values, updateValues }
+    const appCtxValue = {
+        values: values,
+        updateValues: (values: formValuesType) => { } // noop default callback
+    };
+
+    const temp = { values, updateValues }
 
     //TODO: going to need some help typing value
     return (
@@ -84,3 +84,4 @@ export const FormProvider = ({ initState, onSuccess, children }: Props) => {
 
 }
 
+export default FormProvider

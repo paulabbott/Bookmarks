@@ -1,4 +1,4 @@
-export async function isUrlReachableFromBE(inputUrl) {
+export async function isUrlReachableFromBE(inputUrl: string) {
   let urlParts = new URL(inputUrl)
   let url = 'https://cors-anywhere.paul161.repl.co/' + urlParts.host + urlParts.pathname
   //NOTE: only trying to get headers not whole page.

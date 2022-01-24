@@ -2,7 +2,7 @@
 
 //I found a solution that could somewhat differentiate between an unreachable domain and one blocked by CORS from the front end using browsers that have a native window fetch but couldn't prove that it was dependable enough to use so spun up a cors-anywhere instance instead.
 
-export async function testIfReachableFE(url) {
+export async function testIfReachableFE(url: string) {
   console.log('try ', url)
   let result = await myFetch(url)
     .catch(async e => {
@@ -13,7 +13,7 @@ export async function testIfReachableFE(url) {
   return result
 }
 
-async function myFetch(url) {
+async function myFetch(url: string) {
   //only get HEAD
   let response = await fetch(url);
   //if the fetch fails ie invalid or blocked by cors we fall into the catch block in testIfReachable and don't progress.
@@ -30,10 +30,10 @@ async function myFetch(url) {
 }
 
 // Working with Chrome Version 96.0.4664.93 (Official Build) (x86_64)
-async function testForCORS(url) {
+async function testForCORS(url: string) {
   console.log('testForCORS', url)
   let returnValue = {}
-  if (window.fetch) {
+  if (typeof window.fetch === "function") {
     // must be chrome or firefox which have native fetch
     await fetch(url, {
         'mode': 'no-cors'
